@@ -2,9 +2,11 @@
 # Proyecto Aula Inteligente
 
 Un manager de diferentes secciones de un aula inteligente, incluyendo:
+
 * Aulas
 * Docentes
 * Informaticos
+
 Y varios mas.
 
 
