@@ -59,15 +59,17 @@
         <h1>Bienvenido al Sistema de Gestión del Aula</h1>
         <p>Selecciona una opción para gestionar los recursos:</p>
         <ul class="navigation-list">
-            <li><a href="{{ route('materias.index') }}">Gestión de Materias</a></li>
-            <li><a href="{{ route('docentes.index') }}">Gestión de Docentes</a></li>
-            <li><a href="{{ route('cursos.index') }}">Gestión de Cursos</a></li>
-            <li><a href="{{ route('aulas.index') }}">Gestión de Aulas</a></li>
-            <li><a href="{{ route('informaticos.index') }}">Gestión de Recursos Informáticos</a></li>
-            <li><a href="{{ route('mantenimientos.index') }}">Gestión de Mantenimientos</a></li>
-            <li><a href="{{ route('horarios.index') }}">Gestión de Horarios</a></li>
-            <li><a href="{{ route('reservas.index') }}">Gestión de Reservas</a></li>
-        </ul>
+			<li><a href="{{ route('materias.index') }}">Gestión de Materias</a></li>
+			<li><a href="{{ route('docentes.index') }}">Gestión de Docentes</a></li>
+			<li><a href="{{ route('cursos.index') }}">Gestión de Cursos</a></li>
+			<li><a href="{{ route('aulas.index') }}">Gestión de Aulas</a></li>
+			<li><a href="{{ route('focos.index') }}">Gestión de Focos</a></li>
+			<li><a href="{{ route('aires.index') }}">Gestión de Aires Acondicionados</a></li>
+			<li><a href="{{ route('informaticos.index') }}">Gestión de Recursos Informáticos</a></li>
+			<li><a href="{{ route('mantenimientos.index') }}">Gestión de Mantenimientos</a></li>
+			<li><a href="{{ route('horarios.index') }}">Gestión de Horarios</a></li>
+			<li><a href="{{ route('reservas.index') }}">Gestión de Reservas</a></li>
+		</ul>
     </div>
 </body>
 </html>

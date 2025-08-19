@@ -23,4 +23,14 @@ class Aula extends Model
     {
         return $this->hasMany(ActividadAcademica::class);
     }
+	// Dentro del modelo Aula
+	public function focos()
+	{
+    return $this->hasMany(Foco::class);
+	}
+	// Dentro del modelo Aula
+	public function airesAcondicionados()
+	{
+    return $this->hasMany(AireAcondicionado::class);
+	}
 }
