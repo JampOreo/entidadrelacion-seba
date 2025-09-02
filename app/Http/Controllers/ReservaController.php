@@ -4,96 +4,94 @@ namespace App\Http\Controllers;
 
 use App\Models\Reserva;
 use App\Models\Aula;
+use App\Models\Horario; // ¡IMPORTANTE: Añade esta línea!
 use Illuminate\Http\Request;
 
 class ReservaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $reservas = Reserva::with('aula')->get();
-        // CAMBIO CRUCIAL: Ahora se retorna una vista, no un JSON.
+        // Cargar las relaciones 'aula' y 'horario' para evitar N+1 queries
+        $reservas = Reserva::with('aula', 'horario')->get();
         return view('reservas.index', compact('reservas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $aulas = Aula::all();
-        return view('reservas.create', compact('aulas'));
+        $horarios = Horario::all(); // <-- Obtener todos los horarios
+        return view('reservas.create', compact('aulas', 'horarios')); // <-- Pasa los horarios a la vista
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'periodo' => 'required|string|max:50',
-            'turno' => 'required|string|max:50',
-            'dia' => 'required|string|max:20',
-            'hora_inicio' => 'required|date_format:H:i',
-            'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
-            'tipo_disponibilidad' => 'nullable|string|max:50',
+            'fecha' => 'required|date',
             'aula_id' => 'required|exists:aulas,id',
+            'horario_id' => 'required|exists:horarios,id', // Validar el ID del horario
+            'tipo_disponibilidad' => 'nullable|string|max:50',
         ]);
 
-        Reserva::create($request->all());
+        // Obtener el horario seleccionado
+        $horario = Horario::find($request->horario_id);
+
+        // Crear la reserva utilizando los datos del formulario y del horario
+        $reserva = Reserva::create([
+            'fecha' => $request->fecha,
+            'hora_inicio' => $horario->hora_inicio, // Sincroniza la hora de inicio
+            'hora_fin' => $horario->hora_fin,     // Sincroniza la hora de fin
+            'dia' => $horario->dia_semana,          // Sincroniza el día
+            'aula_id' => $request->aula_id,
+            'horario_id' => $request->horario_id,
+            'tipo_disponibilidad' => $request->tipo_disponibilidad,
+        ]);
 
         return redirect()->route('reservas.index')
                          ->with('success', 'Reserva creada exitosamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Reserva $reserva)
     {
-        $reserva->load('aula');
         return view('reservas.show', compact('reserva'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Reserva $reserva)
     {
         $aulas = Aula::all();
-        return view('reservas.edit', compact('reserva', 'aulas'));
+        $horarios = Horario::all(); // <-- Obtener todos los horarios
+        return view('reservas.edit', compact('reserva', 'aulas', 'horarios')); // <-- Pasa los horarios a la vista
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Reserva $reserva)
     {
         $request->validate([
-            'periodo' => 'required|string|max:50',
-            'turno' => 'required|string|max:50',
-            'dia' => 'required|string|max:20',
-            'hora_inicio' => 'required|date_format:H:i',
-            'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
-            'tipo_disponibilidad' => 'nullable|string|max:50',
+            'fecha' => 'required|date',
             'aula_id' => 'required|exists:aulas,id',
+            'horario_id' => 'required|exists:horarios,id', // Validar el ID del horario
+            'tipo_disponibilidad' => 'nullable|string|max:50',
         ]);
-        
-        $reserva->update($request->all());
 
-        return redirect()->route('reservas.index')
+        // Obtener el horario seleccionado
+        $horario = Horario::find($request->horario_id);
+
+        // Actualizar la reserva
+        $reserva->update([
+            'fecha' => $request->fecha,
+            'hora_inicio' => $horario->hora_inicio, // Sincroniza la hora de inicio
+            'hora_fin' => $horario->hora_fin,     // Sincroniza la hora de fin
+            'dia' => $horario->dia_semana,          // Sincroniza el día
+            'aula_id' => $request->aula_id,
+            'horario_id' => $request->horario_id,
+            'tipo_disponibilidad' => $request->tipo_disponibilidad,
+        ]);
+
+        return redirect()->route('reservas.show', $reserva->id)
                          ->with('success', 'Reserva actualizada exitosamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Reserva $reserva)
     {
         $reserva->delete();
-
         return redirect()->route('reservas.index')
                          ->with('success', 'Reserva eliminada exitosamente.');
     }

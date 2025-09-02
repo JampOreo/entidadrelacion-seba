@@ -59,6 +59,7 @@
                                 @endif
                             </td> {{-- Accede a la relación docentes --}}
                             <td class="actions">
+								@include('components.back-to-home')
                                 <a href="{{ route('materias.show', $materia->id) }}" style="background-color: #007bff; color: white;">Ver</a>
                                 <a href="{{ route('materias.edit', $materia->id) }}" style="background-color: #ffc107; color: black;">Editar</a>
                                 <form action="{{ route('materias.destroy', $materia->id) }}" method="POST" style="display:inline;">

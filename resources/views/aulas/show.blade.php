@@ -41,6 +41,7 @@
         </div>
 
         <div class="actions-row">
+			@include('components.back-to-home')
             <a href="{{ route('aulas.edit', $aula->id) }}" class="edit-btn">Editar</a>
             <form action="{{ route('aulas.destroy', $aula->id) }}" method="POST" style="display:inline;">
                 @csrf

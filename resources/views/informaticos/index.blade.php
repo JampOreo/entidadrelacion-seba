@@ -53,6 +53,7 @@
                             <td>{{ $informatico->disponibilidad }}</td>
                             <td>{{ $informatico->especialidad }}</td>
                             <td class="actions">
+								@include('components.back-to-home')
                                 <a href="{{ route('informaticos.show', $informatico->id) }}" style="background-color: #007bff; color: white;">Ver</a>
                                 <a href="{{ route('informaticos.edit', $informatico->id) }}" style="background-color: #ffc107; color: black;">Editar</a>
                                 <form action="{{ route('informaticos.destroy', $informatico->id) }}" method="POST" style="display:inline;">

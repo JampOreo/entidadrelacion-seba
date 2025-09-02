@@ -19,25 +19,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>Detalles de Reserva</h1>
-
+        <h1>Detalles de Reserva: {{ $reserva->id }}</h1>
         <div class="detail-item">
-            <strong>ID:</strong> {{ $reserva->id }}
+            <strong>Fecha:</strong> {{ $reserva->fecha }}
         </div>
         <div class="detail-item">
-            <strong>Período:</strong> {{ $reserva->periodo }}
-        </div>
-        <div class="detail-item">
-            <strong>Turno:</strong> {{ $reserva->turno }}
-        </div>
-        <div class="detail-item">
-            <strong>Día:</strong> {{ $reserva->dia }}
-        </div>
-        <div class="detail-item">
-            <strong>Hora Inicio:</strong> {{ \Carbon\Carbon::parse($reserva->hora_inicio)->format('H:i') }}
-        </div>
-        <div class="detail-item">
-            <strong>Hora Fin:</strong> {{ \Carbon\Carbon::parse($reserva->hora_fin)->format('H:i') }}
+            <strong>Horario:</strong> 
+            {{ $reserva->horario->dia_semana ?? 'N/A' }} de 
+            {{ \Carbon\Carbon::parse($reserva->horario->hora_inicio ?? '')->format('H:i') }} a 
+            {{ \Carbon\Carbon::parse($reserva->horario->hora_fin ?? '')->format('H:i') }}
         </div>
         <div class="detail-item">
             <strong>Tipo Disponibilidad:</strong> {{ $reserva->tipo_disponibilidad ?? 'N/A' }}

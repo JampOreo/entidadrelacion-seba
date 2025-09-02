@@ -47,6 +47,7 @@
         </div>
 
         <div class="actions-row">
+			@include('components.back-to-home')
             <a href="{{ route('mantenimientos.edit', $mantenimiento->id) }}" class="edit-btn">Editar</a>
             <form action="{{ route('mantenimientos.destroy', $mantenimiento->id) }}" method="POST" style="display:inline;">
                 @csrf

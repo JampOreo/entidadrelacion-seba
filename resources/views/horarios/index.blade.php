@@ -53,6 +53,7 @@
                             <td>{{ $horario->tipo_horario ?? 'N/A' }}</td>
                             <td>{{ $horario->estado }}</td>
                             <td class="actions">
+								@include('components.back-to-home')
                                 <a href="{{ route('horarios.show', $horario->id) }}" style="background-color: #007bff; color: white;">Ver</a>
                                 <a href="{{ route('horarios.edit', $horario->id) }}" style="background-color: #ffc107; color: black;">Editar</a>
                                 <form action="{{ route('horarios.destroy', $horario->id) }}" method="POST" style="display:inline;">

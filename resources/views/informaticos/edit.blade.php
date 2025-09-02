@@ -20,9 +20,8 @@
 <body>
     <div class="container">
         <h1>Editar Informático: {{ $informatico->nombre }}</h1>
-
         @if ($errors->any())
-            <div style="color: red; margin-bottom: 20px;">
+            <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border: 1px solid #f5c6cb; border-radius: 5px; margin-bottom: 20px;">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -43,7 +42,8 @@
             </div>
             <div>
                 <label for="dni">DNI:</label>
-                <input type="text" id="dni" name="dni" value="{{ old('dni', $informatico->dni) }}">
+                {{-- CAMBIOS AQUI --}}
+                <input type="text" id="dni" name="dni" value="{{ old('dni', $informatico->dni) }}" required maxlength="8" pattern="\d{8}" title="El DNI debe tener 8 dígitos numéricos.">
                 @error('dni')
                     <div class="error-message">{{ $message }}</div>
                 @enderror

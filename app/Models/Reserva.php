@@ -16,4 +16,8 @@ class Reserva extends Model
     {
         return $this->belongsTo(Aula::class);
     }
+	public function horario()
+    {
+        return $this->belongsTo(Horario::class);
+    }
 }

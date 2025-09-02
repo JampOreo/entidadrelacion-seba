@@ -52,6 +52,18 @@
         .navigation-list a:hover {
             background-color: #0056b3;
         }
+        /* Estilos para el botón secreto de imagen */
+        #secret-button-image {
+            max-width: 150px; /* Tamaño máximo para la imagen */
+            height: auto;
+            cursor: pointer;
+            border-radius: 8px; /* Opcional: para que coincida con el estilo de los otros botones */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        #secret-button-image:hover {
+            transform: scale(1.05); /* Pequeño efecto al pasar el ratón */
+        }
     </style>
 </head>
 <body>
@@ -59,17 +71,56 @@
         <h1>Bienvenido al Sistema de Gestión del Aula</h1>
         <p>Selecciona una opción para gestionar los recursos:</p>
         <ul class="navigation-list">
-			<li><a href="{{ route('materias.index') }}">Gestión de Materias</a></li>
-			<li><a href="{{ route('docentes.index') }}">Gestión de Docentes</a></li>
-			<li><a href="{{ route('cursos.index') }}">Gestión de Cursos</a></li>
-			<li><a href="{{ route('aulas.index') }}">Gestión de Aulas</a></li>
-			<li><a href="{{ route('focos.index') }}">Gestión de Focos</a></li>
-			<li><a href="{{ route('aires.index') }}">Gestión de Aires Acondicionados</a></li>
-			<li><a href="{{ route('informaticos.index') }}">Gestión de Recursos Informáticos</a></li>
-			<li><a href="{{ route('mantenimientos.index') }}">Gestión de Mantenimientos</a></li>
-			<li><a href="{{ route('horarios.index') }}">Gestión de Horarios</a></li>
-			<li><a href="{{ route('reservas.index') }}">Gestión de Reservas</a></li>
-		</ul>
+            <li><a href="{{ route('materias.index') }}">Gestión de Materias</a></li>
+            <li><a href="{{ route('docentes.index') }}">Gestión de Docentes</a></li>
+            <li><a href="{{ route('aulas.index') }}">Gestión de Aulas</a></li>
+            <li><a href="{{ route('focos.index') }}">Gestión de Focos</a></li>
+            <li><a href="{{ route('aires.index') }}">Gestión de Aires Acondicionados</a></li>
+            <li><a href="{{ route('informaticos.index') }}">Gestión de Informáticos</a></li>
+            <li><a href="{{ route('mantenimientos.index') }}">Gestión de Mantenimientos</a></li>
+            <li><a href="{{ route('horarios.index') }}">Gestión de Horarios</a></li>
+            <li><a href="{{ route('reservas.index') }}">Gestión de Reservas</a></li>
+            {{-- Botón secreto con imagen --}}
+            <li id="secret-button" style="display: none;">
+                <img id="secret-button-image" src="https://tse1.explicit.bing.net/th/id/OIP.euqcKdvOqvf3vSIfFsa-FQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Boton Secreto">
+            </li>
+        </ul>
     </div>
+
+    {{-- Elemento de audio oculto --}}
+    <audio id="top-secret-audio" src="{{ asset('topsecret.mp3') }}"></audio>
+
+    <script>
+        let keyCount = 0;
+        const secretButton = document.getElementById('secret-button');
+        const secretButtonImage = document.getElementById('secret-button-image'); // Referencia a la imagen
+        const audio = document.getElementById('top-secret-audio');
+        let buttonEventAdded = false; // Variable para controlar si el evento ya fue agregado
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'j' || event.key === 'J') {
+                keyCount++;
+                if (keyCount >= 4) {
+                    secretButton.style.display = 'block';
+                    keyCount = 0; // Reinicia el contador para que se pueda volver a activar
+                    
+                    if (!buttonEventAdded) {
+                        // Añade el evento de clic a la IMAGEN una sola vez
+                        secretButtonImage.addEventListener('click', function(e) {
+                            e.preventDefault(); // Previene el comportamiento por defecto (aunque una imagen no tiene uno por defecto como un enlace)
+                            
+                            // Detiene y reinicia el audio antes de reproducirlo
+                            audio.pause();
+                            audio.currentTime = 0;
+                            audio.play();
+                        });
+                        buttonEventAdded = true;
+                    }
+                }
+            } else {
+                keyCount = 0; // Reinicia el contador si se presiona cualquier otra tecla
+            }
+        });
+    </script>
 </body>
 </html>

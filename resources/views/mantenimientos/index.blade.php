@@ -53,6 +53,7 @@
                             <td>{{ Str::limit($mantenimiento->descripcion, 50) ?? 'N/A' }}</td>
                             <td>{{ $mantenimiento->informatico->nombre ?? 'N/A' }}</td>
                             <td class="actions">
+								@include('components.back-to-home')
                                 <a href="{{ route('mantenimientos.show', $mantenimiento->id) }}" style="background-color: #007bff; color: white;">Ver</a>
                                 <a href="{{ route('mantenimientos.edit', $mantenimiento->id) }}" style="background-color: #ffc107; color: black;">Editar</a>
                                 <form action="{{ route('mantenimientos.destroy', $mantenimiento->id) }}" method="POST" style="display:inline;">

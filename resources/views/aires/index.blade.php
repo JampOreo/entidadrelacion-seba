@@ -53,6 +53,7 @@
                             <td>{{ $aire->estado }}</td>
                             <td>{{ $aire->aula->ubicacion }}</td>
                             <td class="actions">
+								@include('components.back-to-home')
                                 <a href="{{ route('aires.edit', $aire->id) }}" style="background-color: #ffc107; color: black;">Editar</a>
                                 <form action="{{ route('aires.destroy', $aire->id) }}" method="POST" style="display:inline;">
                                     @csrf

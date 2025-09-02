@@ -14,61 +14,39 @@
         button { background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-right: 10px; }
         button:hover { background-color: #218838; }
         .back-link { display: inline-block; margin-top: 20px; text-decoration: none; color: #007bff; }
-        .error-message { color: red; font-size: 0.9em; margin-top: 5px; }
+        .error-message { color: red; font-size: 0.8em; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Editar Reserva: {{ $reserva->id }}</h1>
-
-        @if ($errors->any())
-            <div style="color: red; margin-bottom: 20px;">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <form action="{{ route('reservas.update', $reserva->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div>
-                <label for="periodo">Período:</label>
-                <input type="text" id="periodo" name="periodo" value="{{ old('periodo', $reserva->periodo) }}" required>
-                @error('periodo')
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" value="{{ old('fecha', $reserva->fecha) }}" required>
+                @error('fecha')
                     <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
+
+            {{-- Nuevo campo para seleccionar el horario --}}
             <div>
-                <label for="turno">Turno:</label>
-                <input type="text" id="turno" name="turno" value="{{ old('turno', $reserva->turno) }}" required>
-                @error('turno')
+                <label for="horario_id">Horario:</label>
+                <select id="horario_id" name="horario_id" required>
+                    <option value="">Seleccione un Horario</option>
+                    @foreach($horarios as $horario)
+                        <option value="{{ $horario->id }}" {{ old('horario_id', $reserva->horario_id) == $horario->id ? 'selected' : '' }}>
+                            {{ $horario->dia_semana }} ({{ \Carbon\Carbon::parse($horario->hora_inicio)->format('H:i') }} - {{ \Carbon\Carbon::parse($horario->hora_fin)->format('H:i') }})
+                        </option>
+                    @endforeach
+                </select>
+                @error('horario_id')
                     <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
-            <div>
-                <label for="dia">Día:</label>
-                <input type="text" id="dia" name="dia" value="{{ old('dia', $reserva->dia) }}" required>
-                @error('dia')
-                    <div class="error-message">{{ $message }}</div>
-                @enderror
-            </div>
-            <div>
-                <label for="hora_inicio">Hora Inicio:</label>
-                <input type="time" id="hora_inicio" name="hora_inicio" value="{{ old('hora_inicio', \Carbon\Carbon::parse($reserva->hora_inicio)->format('H:i')) }}" required>
-                @error('hora_inicio')
-                    <div class="error-message">{{ $message }}</div>
-                @enderror
-            </div>
-            <div>
-                <label for="hora_fin">Hora Fin:</label>
-                <input type="time" id="hora_fin" name="hora_fin" value="{{ old('hora_fin', \Carbon\Carbon::parse($reserva->hora_fin)->format('H:i')) }}" required>
-                @error('hora_fin')
-                    <div class="error-message">{{ $message }}</div>
-                @enderror
-            </div>
+
             <div>
                 <label for="tipo_disponibilidad">Tipo de Disponibilidad:</label>
                 <input type="text" id="tipo_disponibilidad" name="tipo_disponibilidad" value="{{ old('tipo_disponibilidad', $reserva->tipo_disponibilidad) }}">

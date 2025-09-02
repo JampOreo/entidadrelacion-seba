@@ -53,6 +53,7 @@
                             <td>{{ $foco->estado }}</td>
                             <td>{{ $foco->aula->ubicacion }}</td>
                             <td class="actions">
+								@include('components.back-to-home')
                                 <a href="{{ route('focos.edit', $foco->id) }}" style="background-color: #ffc107; color: black;">Editar</a>
                                 <form action="{{ route('focos.destroy', $foco->id) }}" method="POST" style="display:inline;">
                                     @csrf

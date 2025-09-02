@@ -18,14 +18,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>Listado de Reservas</h1>
-
         @if(session('success'))
             <div class="success-message">
                 {{ session('success') }}
             </div>
         @endif
 
+        
+
+        <h1>Listado de Reservas</h1>
         <a href="{{ route('reservas.create') }}" class="create-btn">Crear Nueva Reserva</a>
 
         @if($reservas->isEmpty())
@@ -35,12 +36,10 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Período</th>
-                        <th>Turno</th>
-                        <th>Día</th>
-                        <th>Hora Inicio</th>
-                        <th>Hora Fin</th>
+                        <th>Fecha</th>
+                        <th>Horario</th>
                         <th>Aula</th>
+                        <th>Tipo Disponibilidad</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -48,13 +47,18 @@
                     @foreach($reservas as $reserva)
                         <tr>
                             <td>{{ $reserva->id }}</td>
-                            <td>{{ $reserva->periodo }}</td>
-                            <td>{{ $reserva->turno }}</td>
-                            <td>{{ $reserva->dia }}</td>
-                            <td>{{ \Carbon\Carbon::parse($reserva->hora_inicio)->format('H:i') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($reserva->hora_fin)->format('H:i') }}</td>
+                            <td>{{ $reserva->fecha }}</td>
+                            <td>
+                                {{ $reserva->horario->dia_semana ?? 'Hora' }}:
+                                {{ \Carbon\Carbon::parse($reserva->horario->hora_inicio ?? '')->format('H:i') }} -
+                                {{ \Carbon\Carbon::parse($reserva->horario->hora_fin ?? '')->format('H:i') }}
+                            </td>
                             <td>{{ $reserva->aula->ubicacion ?? 'N/A' }} (Cap: {{ $reserva->aula->capacidad ?? 'N/A' }})</td>
+                            <td>{{ $reserva->tipo_disponibilidad ?? 'N/A' }}</td>
                             <td class="actions">
+								<a href="{{ route('welcome') }}" style="background-color: #ffc107; color: black; padding: 3px 8px; border-radius: 3px; text-decoration: none; margin-top: 20px; display: inline-block;">
+				Volver al Menú Principal
+			</a>
                                 <a href="{{ route('reservas.show', $reserva->id) }}" style="background-color: #007bff; color: white;">Ver</a>
                                 <a href="{{ route('reservas.edit', $reserva->id) }}" style="background-color: #ffc107; color: black;">Editar</a>
                                 <form action="{{ route('reservas.destroy', $reserva->id) }}" method="POST" style="display:inline;">

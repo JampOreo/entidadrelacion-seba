@@ -63,6 +63,7 @@
                             </td>
                             <td>{{ $actividad->aula->ubicacion ?? 'N/A' }}</td>
                             <td class="actions">
+								@include('components.back-to-home')
                                 <a href="{{ route('actividades-academicas.show', $actividad->id) }}" style="background-color: #007bff; color: white;">Ver</a>
                                 <a href="{{ route('actividades-academicas.edit', $actividad->id) }}" style="background-color: #ffc107; color: black;">Editar</a>
                                 <form action="{{ route('actividades-academicas.destroy', $actividad->id) }}" method="POST" style="display:inline;">
