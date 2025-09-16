@@ -80,45 +80,60 @@
             <li><a href="{{ route('mantenimientos.index') }}">Gestión de Mantenimientos</a></li>
             <li><a href="{{ route('horarios.index') }}">Gestión de Horarios</a></li>
             <li><a href="{{ route('reservas.index') }}">Gestión de Reservas</a></li>
-            {{-- Botón secreto con imagen --}}
             <li id="secret-button" style="display: none;">
                 <img id="secret-button-image" src="https://tse1.explicit.bing.net/th/id/OIP.euqcKdvOqvf3vSIfFsa-FQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Boton Secreto">
             </li>
         </ul>
     </div>
 
-    {{-- Elemento de audio oculto --}}
+    {{-- Elementos de audio ocultos --}}
     <audio id="top-secret-audio" src="{{ asset('topsecret.mp3') }}"></audio>
+    <audio id="pena-terrible-audio" src="{{ asset('penaterrible.mp3') }}"></audio>
 
     <script>
         let keyCount = 0;
         const secretButton = document.getElementById('secret-button');
-        const secretButtonImage = document.getElementById('secret-button-image'); // Referencia a la imagen
-        const audio = document.getElementById('top-secret-audio');
-        let buttonEventAdded = false; // Variable para controlar si el evento ya fue agregado
+        const secretButtonImage = document.getElementById('secret-button-image');
+        const audioTopSecret = document.getElementById('top-secret-audio');
+        const audioPenaTerrible = document.getElementById('pena-terrible-audio');
+        let buttonEventAdded = false;
 
         document.addEventListener('keydown', function(event) {
             if (event.key === 'j' || event.key === 'J') {
                 keyCount++;
                 if (keyCount >= 4) {
                     secretButton.style.display = 'block';
-                    keyCount = 0; // Reinicia el contador para que se pueda volver a activar
+                    keyCount = 0;
+                    
+                    // El audio de "pena terrible" ya no se reproduce aquí.
                     
                     if (!buttonEventAdded) {
-                        // Añade el evento de clic a la IMAGEN una sola vez
                         secretButtonImage.addEventListener('click', function(e) {
-                            e.preventDefault(); // Previene el comportamiento por defecto (aunque una imagen no tiene uno por defecto como un enlace)
+                            e.preventDefault();
                             
-                            // Detiene y reinicia el audio antes de reproducirlo
-                            audio.pause();
-                            audio.currentTime = 0;
-                            audio.play();
+                            // Reproduce el audio "top-secret" al hacer clic
+                            audioTopSecret.pause();
+                            audioTopSecret.currentTime = 0;
+                            audioTopSecret.play();
+
+                            // Lógica de autodestrucción
+                            const randomNumber = Math.floor(Math.random() * 6) + 1;
+                            if (randomNumber === 1) {
+                                // Reproduce el audio "pena terrible" aquí, justo antes de la alerta
+                                audioPenaTerrible.pause();
+                                audioPenaTerrible.currentTime = 0;
+                                audioPenaTerrible.play();
+                                
+                                alert('si... es una pena terrible...');
+                                secretButton.style.display = 'none';
+                                buttonEventAdded = false;
+                            }
                         });
                         buttonEventAdded = true;
                     }
                 }
             } else {
-                keyCount = 0; // Reinicia el contador si se presiona cualquier otra tecla
+                keyCount = 0;
             }
         });
     </script>
