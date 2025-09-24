@@ -80,6 +80,7 @@
             <li><a href="{{ route('mantenimientos.index') }}">Gestión de Mantenimientos</a></li>
             <li><a href="{{ route('horarios.index') }}">Gestión de Horarios</a></li>
             <li><a href="{{ route('reservas.index') }}">Gestión de Reservas</a></li>
+            <li><a href="{{ route('sensores.index') }}">Gestión de Sensores</a></li>
             <li id="secret-button" style="display: none;">
                 <img id="secret-button-image" src="https://tse1.explicit.bing.net/th/id/OIP.euqcKdvOqvf3vSIfFsa-FQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Boton Secreto">
             </li>
@@ -104,8 +105,6 @@
                 if (keyCount >= 4) {
                     secretButton.style.display = 'block';
                     keyCount = 0;
-                    
-                    // El audio de "pena terrible" ya no se reproduce aquí.
                     
                     if (!buttonEventAdded) {
                         secretButtonImage.addEventListener('click', function(e) {

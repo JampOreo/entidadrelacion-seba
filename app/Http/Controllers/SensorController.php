@@ -13,6 +13,12 @@ class SensorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
+	 
+    public function index()
+    {
+        $sensores = Sensor::orderBy('created_at', 'desc')->paginate(20);
+        return view('sensores.index', compact('sensores'));
+    }
     public function store(Request $request)
     {
         // Validación básica de los datos de entrada
@@ -29,5 +35,6 @@ class SensorController extends Controller
         
         // Retorna una respuesta JSON de éxito
         return response()->json(['message' => 'Dato guardado con éxito'], 201);
+		
     }
 }

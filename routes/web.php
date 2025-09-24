@@ -12,6 +12,7 @@ use App\Http\Controllers\InformaticoController;
 use App\Http\Controllers\MantenimientoController;
 use App\Http\Controllers\FocoController;
 use App\Http\Controllers\AireAcondicionadoController;
+use App\Http\Controllers\SensorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,6 @@ Route::resource('informaticos', InformaticoController::class);
 Route::resource('mantenimientos', MantenimientoController::class);
 Route::resource('focos', FocoController::class);
 Route::resource('aires', AireAcondicionadoController::class);
+
+// Nueva ruta para la vista de sensores
+Route::get('/sensores', [SensorController::class, 'index'])->name('sensores.index');
